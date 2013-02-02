@@ -1,9 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, url_for
 from flask.ext.mongoengine import MongoEngine
-from flask.ext.security import Security, MongoEngineUserDatastore, login_required
-from flask.ext.security import UserMixin, RoleMixin
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 app.config["DEBUG"] = True
 app.config["SECRET_KEY"] = 'not-secret'
 
@@ -11,31 +9,32 @@ app.config["MONGODB_DB"] = 'confessionsplus'
 app.config["MONGODB_HOST"] = 'localhost'
 app.config["MONGODB_PORT"] = 27017
 
+app.config["SERVER_NAME"] = "confessionsplus.dev:5000"
+
+app.config["SOCIAL_FACEBOOK"] = {
+  'consumer_key': "328075160635846",
+  'consumer_secret': "36a95cf8babf110ae8b6f7d49c127725"
+}
+
+app.config["SECURITY_POST_LOGIN"] = "/posts"
+
 db = MongoEngine(app)
 
-class Role(db.Document, RoleMixin):
-    name = db.StringField(max_length=80, unique=True)
-    description = db.StringField(max_length=255)
+def register_blueprints(app):
+  from confessionsplus.views import posts, profile
+  app.register_blueprint(posts)
+  app.register_blueprint(profile)
 
-class User(db.Document, UserMixin):
-    email = db.StringField(max_length=255)
-    password = db.StringField(max_length=255)
-    active = db.BooleanField(default=True)
-    confirmed_at = db.DateTimeField()
-    roles = db.ListField(db.ReferenceField(Role), default=[])
+register_blueprints(app)
 
-# Setup Flask-Security
-user_datastore = MongoEngineUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
-
-@app.before_first_request
-def create_user():
-    user_datastore.create_user(email='srikrish@andrew.cmu.edu', password='password')
-
-@app.route('/')
-@login_required
-def home():
-  return render_template('index.html')
+@app.context_processor
+def util():
+  def url_static(filename):
+    if app.debug:
+        return url_for('.static', filename=filename)
+    else:
+        return app.config['STATIC_URI'] + filename
+  return dict(url_static=url_static)
 
 if __name__ == "__main__":
   app.run()
