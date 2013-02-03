@@ -1,13 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, abort, url_for, session
 from flask.ext.security import current_user, login_required
 from flask.ext.login import login_user
-from confessionsplus.models import Comment, Post, User, facebook
 import cgi
 
 main = Blueprint('main', __name__, template_folder="templates")
 posts = Blueprint('posts', __name__, template_folder="templates")
 profile = Blueprint('profile', __name__, template_folder="templates")
 admin = Blueprint('admin', __name__, template_folder="templates")
+
+from models import Comment, Post, User, facebook
 
 @main.route('/')
 def index():

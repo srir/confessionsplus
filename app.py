@@ -26,7 +26,7 @@ db = MongoEngine(app)
 csrf(app)
 
 def register_blueprints(app):
-  from confessionsplus.views import posts, profile, main, admin
+  from views import posts, profile, main, admin
   app.register_blueprint(main)
   app.register_blueprint(posts)
   app.register_blueprint(profile)

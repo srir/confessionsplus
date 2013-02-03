@@ -1,6 +1,6 @@
 import datetime
 import shortuuid
-from confessionsplus import app, db, oauth
+from app import app, db, oauth
 from flask.ext.security import Security, MongoEngineUserDatastore
 from flask.ext.security import UserMixin, RoleMixin
 
