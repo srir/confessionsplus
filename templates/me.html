@@ -1,9 +1,11 @@
+{% set group = 'my' %}
 {% extends "base.html" %}
 
-{% block title %} {{group}}{% endblock %}
+{% block title %} my confessions{% endblock %}
 
 {% block content %}
   {% for post in posts %}
+    {% set group = post.group %}
     {% include "partials/post.html" %}
   {% endfor %}
 {% endblock %}

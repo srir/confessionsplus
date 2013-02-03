@@ -1,0 +1,25 @@
+{% if group %}
+  <a id="home" href="{{ url_for('posts.list', group=group) }}">home</a>
+  <a id="groups" href="{{ url_for('main.index') }}">groups</a>
+  <a id="create" href="{{ url_for('posts.create', group=group) }}">post</a>
+  {% if current_user.is_authenticated() %}
+  <a id="me" href="{{ url_for('profile.me') }}">me</a>
+  {% if current_user.moderating %}
+  <a id="admin" href="{{ url_for('admin.admin_list', group=group) }}">admin</a>
+  {% endif %}
+  <a id="logout" href="{{ url_for('security.logout') }}">logout</a>
+  {% else %}
+  <a id="login" href="{{ url_for('security.login') }}">login</a>
+  {% endif %}
+{% else %}
+  <a id="groups" href="{{ url_for('main.index') }}">groups</a>
+  {% if current_user.is_authenticated() %}
+  <a id="me" href="{{ url_for('profile.me') }}">me</a>
+  {% if current_user.moderating %}
+  <a id="admin" href="{{ url_for('admin.admin_index') }}">admin</a>
+  {% endif %}
+  <a id="logout" href="{{ url_for('security.logout') }}">logout</a>
+  {% else %}
+  <a id="login" href="{{ url_for('security.login') }}">login</a>
+  {% endif %}
+{% endif %}

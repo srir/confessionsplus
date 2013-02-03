@@ -1,0 +1,6 @@
+<article class='post'>
+  <p class='headline'>{{ post.body }}</p>
+  <abbr class='timestamp timeago' title="{{ post.created_at }}"></abbr>
+  <a class='approve-link' href="{{ url_for('admin.approve', group=group, slug=post.slug) }}">approve</a>
+  <a class='deny-link' href="{{ url_for('admin.deny', group=group, slug=post.slug) }}">deny</a>
+</article>

@@ -1,0 +1,7 @@
+<div class="comment">
+  <p class='comment-body'>{{ comment.body }}</p>
+  <p class='comment-author'>
+  {% if comment.author %}by {{ comment.author.name }} {% endif %}
+  <span class="timestamp"><abbr class='timeago' title="{{ comment.created_at }}"></abbr></span>
+  </p>
+</div>

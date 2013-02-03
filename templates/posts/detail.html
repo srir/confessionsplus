@@ -1,9 +1,28 @@
-<html>
-  <head>
-    <title>Confessions | Post</title>
-  </head>
-  <body>
-    {{ post }}
-  </body>
-</html>
+{% extends "base.html" %}
 
+{% block title %}{{ post.body | truncate(20) }}{% endblock %}
+
+{% block content %}
+  <article class='post'>
+    <p class="headline">{{ post.body }}</p>
+    <abbr class='timestamp timeago' title="{{ post.created_at }}"></abbr>
+
+    <ul class='comments'>
+    {% for comment in post.comments %}
+      <li>{% include "partials/comment.html" %}</li>
+    {% endfor %}
+    </ul>
+    {% if current_user.is_authenticated() %}
+      <div id="create-comment-form" class="form">
+        <form action="{{ url_for('posts.comment', group=group, slug=post.slug) }}" method="POST">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+          <textarea id="create-comment" name="comment" placeholder="be nice."></textarea>
+          <input type="submit" id="create-comment-submit" value="comment"/>
+          <div id="create-comment-anon">
+            <input type="checkbox" name="anonymous"><label for="anonymous">anonymous</label>
+          </div>
+        </form>
+      </div>
+    {% endif %}
+  </article>
+{% endblock %}

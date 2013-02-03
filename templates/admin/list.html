@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} {{group}}{% endblock %}
+
+{% block content %}
+  unapproved:
+  <div>
+    {% for post in unapproved_posts %}
+      {% include "partials/admin_post.html" %}
+    {% endfor %}
+  </div>
+  approved:
+  <div>
+  {% for post in approved_posts %}
+    {% include "partials/admin_post.html" %}
+  {% endfor %}
+  </div>
+{% endblock %}

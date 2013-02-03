@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}create group{% endblock %}
+
+{% block content %}
+<div id="create-group-form" class="form">
+  <h2 class="form-header">create a group</h2>
+  <form action="{{ url_for('main.group_create') }}" method="POST">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+    <input type="text" id="create-group" name="group" placeholder="group name"></textarea>
+    <input type="submit" value="create" id="create-group-submit" />
+  </form>
+</div>
+{% endblock %}

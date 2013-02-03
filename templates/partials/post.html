@@ -1,4 +1,8 @@
 <article class='post'>
-  <p>{{ post.body }}</p>
-  <a href=""><abbr class='timeago' title="{{ post.created_at }}"></abbr>
+  <p class='headline'>{{ post.body }}</p>
+  {% if post.approved %}
+  <abbr class='timestamp timeago' title="{{ post.created_at }}"></abbr> <a class='permalink' href="{{ url_for('posts.detail', group=group, slug=post.slug) }}">comments</a>
+  {% else %}
+  <span class='unapproved'>not yet approved</span>
+  {% endif %}
 </article>

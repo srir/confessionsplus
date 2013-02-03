@@ -1,19 +1,29 @@
 <html>
   <head>
-    <title>Confessions+ | {% block title %} {% endblock %}</title> 
+    <title>confessions+ | {% block title %} {% endblock %}</title> 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
     <div id="wrapper">
-      <header>
-        <h1>{{ group }} confessions+</h1>
-        <a id="create" href="#">create</a>
+      <header id="nav">
+      <h1>{% if group %}{{ group }} {% endif %}confessions+</h1>
+      <div id="nav-inner" class="right">
+        {% block header %}
+          {% include "partials/header.html" %}
+        {% endblock %}
+      </div>
       </header>
       <div id="content">
       {% block content %}
       
       {% endblock %}
       </div>
+      <footer id="footer">
+        made with love by sri raghavan (<a href="http://twitter.com/srir">@srir</a>)
+        <div class="right">
+          <a href="{{ url_for('main.group_create') }}" id="groupcreate">create group</a>
+        </div>
+      </footer>
     </div>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/0.11.4/jquery.timeago.js"></script>
